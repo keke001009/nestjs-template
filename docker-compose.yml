@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  postgres-db:
+    image: postgres
+    restart: always
+    container_name: postgres # 컨테이너 이름 설정
+    environment:
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"      
+    volumes:
+      - ./data/:/var/lib/postgresql/data
+
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    container_name: postgres-adminer # 컨테이너 이름 설정
+    ports:
+      - 8080:8080

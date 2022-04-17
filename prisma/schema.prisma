@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id    Int     @default(autoincrement()) @id
+  email String  @unique
+  username  String @unique
+  password String
+  keeper Keeper?
+  user User?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model Keeper {
+  id    Int     @default(autoincrement()) @id
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  member Member @relation(fields: [memberId], references: [id])
+  memberId   Int
+  task Task?
+  locations Location[]
+}
+
+model User {
+  id    Int     @default(autoincrement()) @id
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  member Member @relation(fields: [memberId], references: [id])
+  memberId   Int
+  task Task?
+}
+
+model Location {
+  id    Int     @default(autoincrement()) @id
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  keeper   Keeper? @relation(fields: [keeperId], references: [id])
+  keeperId Int?
+  name String @unique
+  address String
+  lat Float /// 위도
+  lng Float /// 경도
+  task Task?
+}
+
+model Task {
+  id    Int     @default(autoincrement()) @id
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  keeper Keeper @relation(fields: [keeperId], references: [id])
+  keeperId   Int 
+  user User @relation(fields: [userId], references: [id])
+  userId   Int 
+  location Location @relation(fields: [locationId], references: [id])
+  locationId   Int 
+  product Product @relation(fields: [productId], references: [id])
+  productId   Int
+  start DateTime
+  end DateTime
+}
+
+enum ProductType {
+  SMALL // 소형
+  MEDINUM // 중형
+  LARGE // 대형
+}
+
+model Product {
+  id    Int     @default(autoincrement()) @id
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  type   ProductType   @default(SMALL)
+  name String   @unique
+  weight Int
+  price Int
+  task Task[]
+}
