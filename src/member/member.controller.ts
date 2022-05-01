@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { LoginMemberDto } from './dto/member.dto';
 
 @Controller('member')
 export class MemberController {
@@ -38,5 +39,11 @@ export class MemberController {
   @Delete(':id')
   async remove(@Param('id') id: string, @Query('crudQuery') crudQuery: string) {
     return this.memberService.remove(id, { crudQuery });
+  }
+
+  @Post('/login')
+  async login(@Body() loginMemberDto: LoginMemberDto) {
+    const logined = await this.memberService.login(loginMemberDto);
+    return logined;
   }
 }
