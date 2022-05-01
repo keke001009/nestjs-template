@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { KeeperService } from './keeper.service';
 import { CreateKeeperDto } from './dto/create-keeper.dto';
 import { UpdateKeeperDto } from './dto/update-keeper.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('키퍼')
 @Controller('keeper')
 export class KeeperController {
   constructor(private readonly keeperService: KeeperService) {}
