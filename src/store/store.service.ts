@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { PrismaCrudService } from 'nestjs-prisma-crud';
 
 @Injectable()
-export class ProductService extends PrismaCrudService {
+export class StoreService extends PrismaCrudService {
   constructor() {
     super({
-      model: 'product',
+      model: 'store',
       allowedJoins: [],
       defaultJoins: [],
     });

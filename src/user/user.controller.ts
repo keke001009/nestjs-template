@@ -2,14 +2,19 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { MemberService } from 'src/member/member.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly memberService: MemberService) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Query('crudQuery') crudQuery: string) {
-    const created = await this.userService.create(createUserDto, { crudQuery });
+    const member = await this.memberService.create(createUserDto, { crudQuery });
+    console.log(member);
+    const created = await this.userService.create({ memberId: member.id }, { crudQuery : {
+      select: { only: ['id', 'memberId'] }
+    }});
     return created;
   }
 

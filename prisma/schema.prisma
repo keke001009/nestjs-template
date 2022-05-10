@@ -31,7 +31,7 @@ model Keeper {
   updatedAt        DateTime           @updatedAt
   member Member @relation(fields: [memberId], references: [id])
   memberId   Int
-  task Task?
+  store Store?
   locations Location[]
 }
 
@@ -41,7 +41,8 @@ model User {
   updatedAt        DateTime           @updatedAt
   member Member @relation(fields: [memberId], references: [id])
   memberId   Int
-  task Task?
+  store Store?
+  bag Bag?
 }
 
 model Location {
@@ -54,10 +55,10 @@ model Location {
   address String
   lat Float /// 위도
   lng Float /// 경도
-  task Task?
+  store Store?
 }
 
-model Task {
+model Store {
   id    Int     @default(autoincrement()) @id
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -67,25 +68,27 @@ model Task {
   userId   Int 
   location Location @relation(fields: [locationId], references: [id])
   locationId   Int 
-  product Product @relation(fields: [productId], references: [id])
-  productId   Int
-  start DateTime
-  end DateTime
+  bag Bag @relation(fields: [bagId], references: [id])
+  bagId   Int
+  checkIn DateTime
+  checkOut DateTime
 }
 
-enum ProductType {
+enum BagType {
   SMALL // 소형
   MEDINUM // 중형
   LARGE // 대형
 }
 
-model Product {
+model Bag {
   id    Int     @default(autoincrement()) @id
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  type   ProductType   @default(SMALL)
+  type   BagType   @default(SMALL)
   name String   @unique
   weight Int
   price Int
-  task Task[]
+  user User @relation(fields: [userId], references: [id])
+  userId   Int 
+  store Store[]
 }
