@@ -5,6 +5,8 @@ export class CreateLocationDto {
     keeperId: number
     @ApiProperty({ description: "위치명" })
     name: string
+    @ApiProperty({ description: "주소" })
+    address: string
     @ApiProperty({ description: "위도" })
     lat: number
     @ApiProperty({ description: "경도" })

@@ -5,8 +5,9 @@ import { UpdateMemberDto } from './dto/update-member.dto';
 import { LoginMemberDto } from './dto/member.dto';
 import { UserService } from 'src/user/user.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('멤버')
 @Controller('member')
 export class MemberController {
   constructor(private readonly memberService: MemberService, private readonly userService: UserService) {}

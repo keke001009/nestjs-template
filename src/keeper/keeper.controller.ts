@@ -41,5 +41,4 @@ export class KeeperController {
   async remove(@Param('id') id: string, @Query('crudQuery') crudQuery: string) {
     return this.keeperService.remove(id, { crudQuery });
   }
-  // enroll location
 }

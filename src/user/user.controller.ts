@@ -3,7 +3,9 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { MemberService } from 'src/member/member.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('일반회원')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService, private readonly memberService: MemberService) {}

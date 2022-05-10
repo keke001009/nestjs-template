@@ -85,7 +85,7 @@ model Bag {
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   type   BagType   @default(SMALL)
-  name String   @unique
+  name String
   weight Int
   price Int
   user User @relation(fields: [userId], references: [id])
