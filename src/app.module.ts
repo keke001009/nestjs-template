@@ -16,6 +16,11 @@ import { StoreModule } from './store/store.module';
     ScheduleModule.forRoot(),
     PrismaCrudModule.register({
     prismaService: PrismaService,
+    accessControl: {
+      authDataKey: 'user',
+      getRolesFromAuthDataFn: (authenticatedUser) => authenticatedUser?.roles,
+      strict: false,
+    },
   }), AuthModule, MemberModule, KeeperModule, UserModule, LocationModule, BagModule, StoreModule],
   controllers: [AppController],
   providers: [AppService],

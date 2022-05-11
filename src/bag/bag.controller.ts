@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BagService } from './bag.service';
 import { CreateBagDto } from './dto/create-bag.dto';
 import { UpdateBagDto } from './dto/update-bag.dto';
 
+@ApiTags('짐(회원)')
 @Controller('bag')
 export class BagController {
   constructor(private readonly bagService: BagService) {}
